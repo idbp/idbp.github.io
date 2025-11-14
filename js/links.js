@@ -8,6 +8,12 @@ link += "<li><a href='" + website + "index.html'>الصفحة الرئيسية</
 
 link += "<li><a href='" + website + "reqactive.html'>طلب رمز تفعيل</a></li>";
 
+link += "<li><a href='" + website + "contact.html'>Contact</a></li>";
+
+link += "<li><a href='" + website + "#'>About</a></li>";
+
+link += "<li><a href='" + website + "#'>FAQ</a></li>";
+
 document.getElementById("links").innerHTML=link;
 
 //social += "<a href='https://codepen.io/'><i class='fa fa-codepen'></i></a>";
@@ -20,6 +26,6 @@ document.getElementById("links").innerHTML=link;
 //social += "<a href='#.html'><i class='fa fa-exclamation'></i></a>";
 //social += "<a href='contact.html'><i class='fa fa-envelope'></i></a>";
 //social += "<a href='contact.html'><i class='fa fa-question'></i></a>";
-social += "<a href='contact.html'><i class='fa fa-lightbulb-o'></i></a> ";
+//social += "<a href='contact.html'><i class='fa fa-lightbulb-o'></i></a> ";
 document.getElementById("sociallinks").innerHTML=social;
 }

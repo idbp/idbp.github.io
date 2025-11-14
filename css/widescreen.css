@@ -52,7 +52,7 @@ footer {
 	margin-top: 10px;
 	width: calc(100% - 10px);
 	height: 100%;
-	color: lightgray;
+	color: black;
 	font-size: 12px;
 }
 
@@ -68,17 +68,17 @@ textarea {
 }
 
 #sociallinks a:link {
-  color: lightgrey;
+  color: black;
 }
 
 #sociallinks a:visited {
-  color: lightgrey;
+  color: black;
 }
 
 #sociallinks a:hover {
-  color: lightgrey;
+  color: black;
 }
 
 #sociallinks a:active {
-  color: lightgrey;
+  color: black;
 }
