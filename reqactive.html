@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html dir="rtl">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+
+      <script src="js/links.js" type="text/javascript"></script>
+      <link rel="stylesheet" type="text/css" href="css/menu.css">
+      <link rel="stylesheet" type="text/css" media="screen and (max-width: 767px)" href="css/smallscreen.css">
+      <link rel="stylesheet" type="text/css" media="screen and (min-width: 768px)" href="css/widescreen.css">
+      
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <title></title>
+   </head>
+   <body onload="funclinks()">
+      <navbar class="navbar-a">
+         <input class="menu-btn" type="checkbox" id="menu-btn" />
+         <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+         <ul class="menu" id="links">
+         </ul>
+      </navbar>
+<div class="container">
+         <header>
+           إرسال رسالة
+         </header>
+	<div class="whitebox">
+<form onsubmit="return validateRQ()" action="https://formspree.io/f/xpwyyljp" method="POST">
+      <div>
+          <label for="RQ">رمز الطلب:<br>
+              <input type="text" name="RQ" id="RQ" placeholder="أدخل رمز الطلب" required>
+          </label>
+      </div>
+      <div>
+        <label for="name">الاسم:<br>
+		<input type="text" name="name" required>
+        </label>
+      </div>
+      <div>
+        <label for="email">البريد الإلكتروني:<br>
+		<input type="email" name="_replyto" required>
+        </label>
+      </div>
+      <div>
+       <label>
+         نص الرسالة:<br>
+         <textarea name="message" rows="10" cols="35"></textarea>
+       </label>
+      </div>
+      <div>
+	<button type="submit">إرسال</button>
+        <input type="reset" name="reset" value="مسح" />
+      </div>
+    </form>
+    </div>
+         <footer>
+		<div>
+		</div>
+         </footer>
+</div>
+
+  <script>
+    function validateRQ() {
+      const input = document.getElementById("RQ").value.trim();
+      if (!input.startsWith("RQ")) {
+        alert("رمز طلب التفعيل غير صحيح");
+        return false;
+}
+      return true;
+}
+  </script>
+   </body>
+</html>
