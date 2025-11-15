@@ -76,3 +76,11 @@ textarea {
 #sociallinks a:active {
   color: black;
 }
+
+details summary {
+    padding: 12px 15px; 
+    min-height: 48px;  
+    display: block; 
+    margin-bottom: 8px; 
+    cursor: pointer; 
+}
