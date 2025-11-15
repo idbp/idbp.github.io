@@ -8,11 +8,7 @@ link += "<li><a href='" + website + "index.html'>الصفحة الرئيسية</
 
 link += "<li><a href='" + website + "reqactive.html'>طلب رمز تفعيل</a></li>";
 
-link += "<li><a href='" + website + "contact.html'>Contact</a></li>";
-
-link += "<li><a href='" + website + "#'>About</a></li>";
-
-link += "<li><a href='" + website + "#'>FAQ</a></li>";
+link += "<li><a href='" + website + "contact.html'>تواصل</a></li>";
 
 document.getElementById("links").innerHTML=link;
 
