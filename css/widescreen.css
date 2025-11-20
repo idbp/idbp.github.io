@@ -80,3 +80,17 @@ textarea {
 #sociallinks a:active {
   color: black;
 }
+
+  .btn {
+    display: inline-block;
+    padding: 1px 2px; 
+    background-color: lightblue;
+    color: black;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: lightskyblue;
+  }
