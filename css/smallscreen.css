@@ -98,3 +98,7 @@ details summary {
   .btn:hover {
     background-color: lightskyblue;
   }
+  
+  #Gbtn {
+    background-color: lightgrey;
+  }

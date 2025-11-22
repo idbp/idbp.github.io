@@ -94,3 +94,7 @@ textarea {
   .btn:hover {
     background-color: lightskyblue;
   }
+  
+    #Gbtn {
+    background-color: lightgrey;
+  }
