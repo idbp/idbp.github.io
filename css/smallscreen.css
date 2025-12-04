@@ -77,12 +77,25 @@ textarea {
   color: black;
 }
 
-details summary {
-    padding: 12px 15px; 
-    min-height: 48px;  
-    display: block; 
-    margin-bottom: 8px; 
-    cursor: pointer; 
+details {
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 0.5em 0.5em 0;
+}
+
+summary {
+  font-weight: bold;
+  margin: -0.5em -0.5em 0;
+  padding: 0.5em;
+}
+
+details[open] {
+  padding: 0.5em;
+}
+
+details[open] summary {
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 0.5em;
 }
 
   .btn {
