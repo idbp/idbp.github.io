@@ -2,11 +2,8 @@
 	box-sizing: border-box;
 }
 
-header {
-	text-align: center;
-	margin-top: 50px;
-	width: calc(100% - 2px);
-	height: 100%;
+main {
+  margin-top: 50px;
 }
 
 .container {
@@ -119,16 +116,3 @@ details[open] summary {
     #Gbtn {
     background-color: lightgrey;
   }
-
-h1 {
-  font-family: 'Cairo', sans-serif;
-  font-size: 22px;
-  font-weight: bold;
-  color: dodgerblue;
-  text-align: center;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  margin-bottom: 20px;
-  border-bottom: 4px solid yellowgreen;
-  padding-bottom: 0px;
-  display: inline-block;
-}
