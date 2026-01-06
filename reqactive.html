@@ -60,7 +60,7 @@
   <script>
     function validateRQ() {
       const input = document.getElementById("RQ").value.trim();
-      if (!input.startsWith("RQ")) {
+      if (!input.toUpperCase().startsWith("RQ")) {
         alert("رمز طلب التفعيل غير صحيح");
         return false;
 }
