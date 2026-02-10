@@ -25,8 +25,8 @@
 	<div class="whitebox">
 <form onsubmit="return validateRQ()" action="https://formspree.io/f/xpwyyljp" method="POST">
       <div>
-          <label for="RQ">رمز الطلب:<br>
-              <input type="text" name="RQ" id="RQ" placeholder="أدخل رمز الطلب" required>
+          <label for="rq">رمز الطلب:<br>
+              <input type="text" name="rq" id="rq" placeholder="أدخل رمز الطلب" required>
           </label>
       </div>
       <div>
@@ -59,7 +59,7 @@
 
   <script>
     function validateRQ() {
-      const input = document.getElementById("RQ").value.trim();
+      const input = document.getElementById("rq").value.trim();
       if (!input.toUpperCase().startsWith("RQ")) {
         alert("رمز طلب التفعيل غير صحيح");
         return false;
@@ -70,10 +70,10 @@
 window.onload = function() {
   const urlParams = new URLSearchParams(window.location.search);
   
-  const rqValue = urlParams.get('RQ');
+  const rqValue = urlParams.get('rq');
   
   if (rqValue) {
-    document.getElementById('RQ').value = decodeURIComponent(rqValue);
+    document.getElementById('rq').value = decodeURIComponent(rqValue);
   }
 };
   </script>
