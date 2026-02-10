@@ -66,6 +66,17 @@
 }
       return true;
 }
+
+window.onload = function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  // إذا كان المعامل في الرابط اسمه RQ
+  const rqValue = urlParams.get('RQ');
+  
+  if (rqValue) {
+    document.getElementById('RQ').value = decodeURIComponent(rqValue);
+  }
+};
   </script>
    </body>
 </html>
