@@ -35,9 +35,9 @@
 
 ### إصدار كامل (مقيد - يتطلب تفعيل)
 
-- [نسخة 32 بت - إصدار 16.0](https://idbp.github.io/Inst32Bit16Ar.zip)
-- [نسخة 64 بت - إصدار 16.0](https://idbp.github.io/Inst64Bit16Ar.zip)
-- [نسخة 32 بت - إصدار 14.0](https://idbp.github.io/Inst32Bit14Ar.zip)
+- [نسخة 32 بت - إصدار 16.0](https://idbp.github.io/download.html?file=Inst32Bit16Ar.zip)
+- [نسخة 64 بت - إصدار 16.0](https://idbp.github.io/download.html?file=Inst64Bit16Ar.zip)
+- [نسخة 32 بت - إصدار 14.0](https://idbp.github.io/download.html?file=Inst32Bit14Ar.zip)
 
 ## ⚙️ متطلبات التشغيل
 
