@@ -29,9 +29,9 @@
 
 ### إصدار Lite (تجريبي محدود)
 
-- [نسخة 32 بت - إصدار 16.0](https://idbp.github.io/d32v16ar.zip)
-- [نسخة 64 بت - إصدار 16.0](https://idbp.github.io/d64v16ar.zip)
-- [نسخة 32 بت - إصدار 14.0](https://idbp.github.io/d32v14ar.zip)
+- [نسخة 32 بت - إصدار 16.0](https://idbp.github.io/d.html?file=d32v16ar.zip)
+- [نسخة 64 بت - إصدار 16.0](https://idbp.github.io/d.html?file=d64v16ar.zip)
+- [نسخة 32 بت - إصدار 14.0](https://idbp.github.io/d.html?file=d32v14ar.zip)
 
 ### إصدار كامل (مقيد - يتطلب تفعيل)
 
