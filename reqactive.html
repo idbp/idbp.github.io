@@ -40,12 +40,53 @@
         </label>
       </div>
       <div>
-       <label>
-         نص الرسالة:<br>
-         <textarea name="message" rows="10" cols="35"></textarea>
-       </label>
+        <label for="country">الدولة:<br>
+          <select name="country" id="country" required>
+            <option value="">-- اختر الدولة --</option>
+            <option value="اليمن">اليمن</option>
+            <option value="السعودية">السعودية</option>
+            <option value="مصر">مصر</option>
+            <option value="الإمارات">الإمارات</option>
+            <option value="قطر">قطر</option>
+            <option value="الكويت">الكويت</option>
+            <option value="البحرين">البحرين</option>
+            <option value="عمان">عمان</option>
+            <option value="الأردن">الأردن</option>
+            <option value="فلسطين">فلسطين</option>
+            <option value="العراق">العراق</option>
+            <option value="سوريا">سوريا</option>
+            <option value="لبنان">لبنان</option>
+            <option value="الجزائر">الجزائر</option>
+            <option value="المغرب">المغرب</option>
+            <option value="تونس">تونس</option>
+            <option value="ليبيا">ليبيا</option>
+            <option value="السودان">السودان</option>
+            <option value="موريتانيا">موريتانيا</option>
+            <option value="الصومال">الصومال</option>
+            <option value="جزر_القمر">جزر القمر</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
       </div>
       <div>
+  <label for="payment">اختر طرق الدفع المفضلة لديك:</label><br>
+  <select id="payment" name="payment[]" multiple size="6" required>
+
+      <option value="hawala">حوالة عبر مكتب صرافة</option>  
+      <option value="western_union">ويسترن يونيون</option>
+      <option value="moneygram">موني جرام</option>
+      <option value="cryptocurrency">عملات رقمية</option>
+      <option value="bank_transfer">تحويل بنكي</option>
+      <option value="local_remittance">شركات تحويل أخرى</option>
+  </select>
+      </div>
+      <div>
+       <label>
+         ملاحظات:<br>
+         <input type="text" name="message">
+       </label>
+      </div>
+      <div><br>
 	<button type="submit">إرسال</button>
         <input type="reset" name="reset" value="مسح" />
       </div>
