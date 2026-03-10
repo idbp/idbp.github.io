@@ -95,6 +95,14 @@
       alert("حدث خطأ أثناء الإرسال، حاول مرة أخرى.");
     }
   });
+
+window.addEventListener("load", function() {
+  const filenameField = document.getElementById("filename");
+  
+  if (filenameField && filenameField.value.trim() === "") {
+    window.location.href = "index.html";
+  }
+});
 </script>
    </body>
 </html>
