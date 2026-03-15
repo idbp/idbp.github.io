@@ -117,28 +117,30 @@ async function updateFileDate() {
     if (!fileName) return;
 
     try {
-        const fileCheck = await fetch(fileName, { method: 'HEAD' });
+        const response = await fetch(fileName, { method: 'HEAD' });
 
-        if (fileCheck.ok) {
-            const jsonResponse = await fetch('files_info.json');
-            const data = await jsonResponse.json();
-
-            if (data[fileName]) {
-                const dateObj = new Date(data[fileName]);
-                const formattedDate = dateObj.toLocaleDateString('ar-EG', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                displayDiv.innerHTML = `تاريخ الرفع: <b>${formattedDate}</b>`;
-            } else {
-                displayDiv.innerHTML = "تاريخ الرفع غير معروف.";
-            }
-        } else {
+        if (!response.ok || response.status === 404) {
             displayDiv.innerHTML = "الملف غير موجود";
+            return;
         }
+
+        const jsonResponse = await fetch('files_info.json');
+        const data = await jsonResponse.json();
+
+        if (data[fileName]) {
+            const dateObj = new Date(data[fileName]);
+            const formattedDate = dateObj.toLocaleDateString('ar-EG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            displayDiv.innerHTML = `تاريخ الرفع: <b>${formattedDate}</b>`;
+        } else {
+            displayDiv.innerHTML = "تاريخ الرفع غير معروف.";
+        }
+
     } catch (error) {
-        displayDiv.innerHTML = "حدث خطأ في الاتصال بالسيرفر.";
+        displayDiv.innerHTML = "الملف غير موجود";
     }
 }
 
