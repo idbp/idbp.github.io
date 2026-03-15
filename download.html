@@ -111,29 +111,33 @@ window.addEventListener("load", function() {
 });
 
 async function updateFileDate() {
-  const displayDiv = document.getElementById('filedate');
-  const fileName = document.getElementById('filename').value;
-  if (!fileName) return;
-  
-  try {
-    const response = await fetch(fileName, { method: 'HEAD' });
-    const lastMod = response.headers.get('Last-Modified');
-    const etag = response.headers.get('ETag');
-    
-    if (lastMod) {
-      // إذا نجح السيرفر أخيراً في إرسال التاريخ
-      displayDiv.innerHTML = new Date(lastMod).toLocaleString('ar-EG');
-    } else if (etag) {
-      // محاولة استخراج التاريخ من ETag (تنسيق Nginx/Apache المشفر)
-      // ملاحظة: قد لا ينجح هذا مع كل السيرفرات حسب نوع التشفير
-      displayDiv.innerHTML = "تاريخ الملف محمي بواسطة السيرفر (ETag: " + etag + ")";
-    } else {
-      displayDiv.innerHTML = "السيرفر يرفض تماماً إرسال بيانات الملف الوصفية.";
+    const displayDiv = document.getElementById('filedate');
+    const fileName = document.getElementById('filename').value;
+
+    if (!fileName) return;
+
+    try {
+        const response = await fetch('files_info.json');
+        const data = await response.json();
+
+        if (data[fileName]) {
+            const dateObj = new Date(data[fileName]);
+            
+            const formattedDate = dateObj.toLocaleDateString('ar-EG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            displayDiv.innerHTML = `تاريخ الرفع: <b>${formattedDate}</b>`;
+        } else {
+            displayDiv.innerHTML = "هذا الملف غير مسجل.";
+        }
+    } catch (error) {
+        displayDiv.innerHTML = "خطأ في تحميل البيانات.";
     }
-  } catch (e) {
-    displayDiv.innerHTML = "خطأ في الاتصال.";
-  }
 }
+
 document.getElementById('filename').addEventListener('change', updateFileDate);
 window.addEventListener('DOMContentLoaded', updateFileDate);
 </script>
