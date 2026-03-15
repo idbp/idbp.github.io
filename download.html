@@ -114,22 +114,30 @@ async function updateFileDate() {
   const displayDiv = document.getElementById('filedate');
   const fileName = document.getElementById('filename').value;
   
+  if (!fileName) return;
+  
+  displayDiv.innerHTML = "جاري الفحص...";
+  
   try {
-    const response = await fetch(fileName, { method: 'HEAD' });
+    const response = await fetch(`${fileName}?v=${Date.now()}`);
     
     if (response.ok) {
       const lastModified = response.headers.get('Last-Modified');
+      
       if (lastModified) {
         const dateObj = new Date(lastModified);
-        displayDiv.innerHTML = `تاريخ تعديل <b>${fileName}</b> هو: <br> ${dateObj.toLocaleString('ar-EG')}`;
+        displayDiv.innerHTML = `تاريخ التعديل: <br> <b>${dateObj.toLocaleString('ar-EG')}</b>`;
       } else {
-        displayDiv.innerHTML = "التاريخ غير متوفر لهذا الملف.";
+        const dateHeader = response.headers.get('Date');
+        displayDiv.innerHTML = dateHeader ?
+          `تاريخ السيرفر الحالي: ${new Date(dateHeader).toLocaleString('ar-EG')}` :
+          "السيرفر يمنع الوصول لتاريخ الملف.";
       }
     } else {
-      displayDiv.innerHTML = `الملف غير موجود.`;
+      displayDiv.innerHTML = `تعذر العثور على الملف (${response.status})`;
     }
   } catch (error) {
-    displayDiv.innerHTML = "خطأ في الاتصال بالسيرفر.";
+    displayDiv.innerHTML = "خطأ في الاتصال.";
   }
 }
 
