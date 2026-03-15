@@ -25,8 +25,14 @@
   <div class="whitebox">
     <form id="downloadForm" action="https://formspree.io/f/xpwyyljp" method="POST">
       <div>
-        <label for="filename">اسم الملف:<br>
-          <input type="text" name="filename" id="filename" readonly style="background-color: #e0e0e0;">
+        <label for="filename">الملف:<br>
+          <select name="filename" id="filename">
+            <option value="" selected disabled hidden>اختر ملف...</option>
+            <option value="Inst64Bit16Ar.zip">64 بت (64Bit16)</option>
+            <option value="Inst32Bit16Ar.zip">32 بت (32Bit16)</option>
+            <option value="Inst32Bit14Ar.zip">2010 (32Bit14)</option>
+          </select>
+          <div id="filedate" style="font-size: 0.6rem;">جاري جلب البيانات...</div>
         </label>
       </div>
       <div>
@@ -103,6 +109,32 @@ window.addEventListener("load", function() {
     window.location.href = "index.html";
   }
 });
+
+async function updateFileDate() {
+  const displayDiv = document.getElementById('filedate');
+  const fileName = document.getElementById('filename').value;
+  
+  try {
+    const response = await fetch(fileName, { method: 'HEAD' });
+    
+    if (response.ok) {
+      const lastModified = response.headers.get('Last-Modified');
+      if (lastModified) {
+        const dateObj = new Date(lastModified);
+        displayDiv.innerHTML = `تاريخ تعديل <b>${fileName}</b> هو: <br> ${dateObj.toLocaleString('ar-EG')}`;
+      } else {
+        displayDiv.innerHTML = "التاريخ غير متوفر لهذا الملف.";
+      }
+    } else {
+      displayDiv.innerHTML = `الملف غير موجود.`;
+    }
+  } catch (error) {
+    displayDiv.innerHTML = "خطأ في الاتصال بالسيرفر.";
+  }
+}
+
+document.getElementById('filename').addEventListener('change', updateFileDate);
+window.addEventListener('DOMContentLoaded', updateFileDate);
 </script>
    </body>
 </html>
