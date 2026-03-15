@@ -113,34 +113,27 @@ window.addEventListener("load", function() {
 async function updateFileDate() {
   const displayDiv = document.getElementById('filedate');
   const fileName = document.getElementById('filename').value;
-  
   if (!fileName) return;
   
-  displayDiv.innerHTML = "جاري الفحص...";
-  
   try {
-    const response = await fetch(`${fileName}?v=${Date.now()}`);
+    const response = await fetch(fileName, { method: 'HEAD' });
+    const lastMod = response.headers.get('Last-Modified');
+    const etag = response.headers.get('ETag');
     
-    if (response.ok) {
-      const lastModified = response.headers.get('Last-Modified');
-      
-      if (lastModified) {
-        const dateObj = new Date(lastModified);
-        displayDiv.innerHTML = `تاريخ التعديل: <br> <b>${dateObj.toLocaleString('ar-EG')}</b>`;
-      } else {
-        const dateHeader = response.headers.get('Date');
-        displayDiv.innerHTML = dateHeader ?
-          `التاريخ: ${new Date(dateHeader).toLocaleString('ar-EG')}` :
-          "السيرفر يمنع الوصول لتاريخ الملف.";
-      }
+    if (lastMod) {
+      // إذا نجح السيرفر أخيراً في إرسال التاريخ
+      displayDiv.innerHTML = new Date(lastMod).toLocaleString('ar-EG');
+    } else if (etag) {
+      // محاولة استخراج التاريخ من ETag (تنسيق Nginx/Apache المشفر)
+      // ملاحظة: قد لا ينجح هذا مع كل السيرفرات حسب نوع التشفير
+      displayDiv.innerHTML = "تاريخ الملف محمي بواسطة السيرفر (ETag: " + etag + ")";
     } else {
-      displayDiv.innerHTML = `تعذر العثور على الملف (${response.status})`;
+      displayDiv.innerHTML = "السيرفر يرفض تماماً إرسال بيانات الملف الوصفية.";
     }
-  } catch (error) {
+  } catch (e) {
     displayDiv.innerHTML = "خطأ في الاتصال.";
   }
 }
-
 document.getElementById('filename').addEventListener('change', updateFileDate);
 window.addEventListener('DOMContentLoaded', updateFileDate);
 </script>
