@@ -27,17 +27,7 @@
 
 ## 📥 روابط التحميل
 
-### إصدار Lite (تجريبي محدود)
-
-- [نسخة 32 بت - إصدار 16.0](https://idbp.github.io/d.html?file=d32v16ar.zip)
-- [نسخة 64 بت - إصدار 16.0](https://idbp.github.io/d.html?file=d64v16ar.zip)
-- [نسخة 32 بت - إصدار 14.0](https://idbp.github.io/d.html?file=d32v14ar.zip)
-
-### إصدار كامل (مقيد - يتطلب تفعيل)
-
-- [نسخة 32 بت - إصدار 16.0](https://idbp.github.io/download.html?file=Inst32Bit16Ar.zip)
-- [نسخة 64 بت - إصدار 16.0](https://idbp.github.io/download.html?file=Inst64Bit16Ar.zip)
-- [نسخة 32 بت - إصدار 14.0](https://idbp.github.io/download.html?file=Inst32Bit14Ar.zip)
+- [رابط١](https://idbp.github.io)
 
 ## ⚙️ متطلبات التشغيل
 
