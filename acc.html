@@ -23,12 +23,18 @@
            طلب رمز تفعيل
          </h1>
 	<div class="whitebox">
-<form onsubmit="return validateRQ()" action="https://formspree.io/f/xpwyyljp" method="POST">
+<form onsubmit="return validateInputs()" action="https://formspree.io/f/xpwyyljp" method="POST">
       <div>
-          <label for="rq">رمز الطلب:<br>
-              <input type="text" name="rq" id="rq" placeholder="أدخل رمز الطلب" required>
+          <label for="rm">الرمز الأساسي:<br>
+              <input type="text" name="rm" id="rm" placeholder="أدخل الرمز الأساسي" required>
           </label>
-          <a id="link1" href="#"></a>
+          <a id="link1" href="#">عرض</a>
+      </div>
+      <div>
+        <label for="rf">رمز الميزات:<br>
+          <input type="text" name="rf" id="rf" placeholder="أدخل رمز الميزات" required>
+        </label>
+        <a id="link2" href="#">عرض</a>
       </div>
       <div>
         <label for="name">الاسم:<br>
@@ -111,45 +117,64 @@
          </footer>
 </div>
 
-  <script>
-    function validateRQ() {
-      const input = document.getElementById("rq").value.trim();
-      if (!input.toUpperCase().startsWith("RQ")) {
-        alert("رمز طلب التفعيل غير صحيح");
-        return false;
-}
-      return true;
-}
-
-window.addEventListener("load", function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const rqValue = urlParams.get('rq');
-  
-  if (rqValue) {
-    document.getElementById('rq').value = decodeURIComponent(rqValue);
+<script>
+  // دالة للتحقق من النص
+  function validateInput(value) {
+    return value.toUpperCase().startsWith("RQ");
   }
-});
+
+  // ملء الحقول من الرابط عند تحميل الصفحة
+  window.addEventListener("load", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('rm')) document.getElementById('rm').value = decodeURIComponent(urlParams.get('rm'));
+    if (urlParams.get('rf')) document.getElementById('rf').value = decodeURIComponent(urlParams.get('rf'));
+  });
 
   document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('link1');
     
-    link.addEventListener('click', function(event) {
+    // دالة المعالجة عند الضغط
+    function handleLinkClick(event, inputId) {
       event.preventDefault();
+      var val = document.getElementById(inputId).value.trim();
       
-      var qq = document.getElementById('rq').value;
-      
-      if (!qq) {
+      if (!val) {
         alert('الرجاء إدخال قيمة');
         return;
       }
       
-      var targetPage = qq.toLowerCase().includes('f') ? 'acf.html' : 'acm.html';
+      if (!validateInput(val)) {
+        alert("الرمز غير صحيح");
+        return;
+      }
       
-      var fullUrl = targetPage + '?rq=' + encodeURIComponent(qq);
+      var targetPage = val.toLowerCase().includes('f') ? 'acf.html' : 'acm.html';
+      var finalUrl = targetPage + '?rq=' + encodeURIComponent(val);
       
-      window.location.href = fullUrl;
+      // إعادة التوجيه
+      window.location.href = finalUrl;
+    }
+
+    // ربط الأحداث بالأزرار
+    document.getElementById('link1').addEventListener('click', function(e) {
+      handleLinkClick(e, 'rm');
+    });
+
+    document.getElementById('link2').addEventListener('click', function(e) {
+      handleLinkClick(e, 'rf');
     });
   });
-  </script>
+
+  function validateInputs() {
+    const rm = document.getElementById('rm').value.trim();
+    const rf = document.getElementById('rf').value.trim();
+
+    if (!rm.toUpperCase().startsWith("RQ") || !rf.toUpperCase().startsWith("RQ")) {
+      alert("خطأ: يجب إدخال رموز صحيحة");
+      return false; 
+    }
+    return true;
+  }
+</script>
+
    </body>
 </html>

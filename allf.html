@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>عرض الميزات - الأسعار - الإجمالي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', 'Noto Sans Arabic', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #eef2f5 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            backdrop-filter: blur(0px);
+            transition: all 0.2s ease;
+        }
+
+        .header {
+            background: #1e3a5f;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e9edf2;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header h1:before {
+            content: "📦";
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .status-card {
+            background: #f8fafc;
+            border-radius: 1.25rem;
+            padding: 1.8rem;
+            text-align: center;
+            color: #2c3e4e;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(30, 58, 95, 0.2);
+            border-radius: 50%;
+            border-top-color: #1e3a5f;
+            animation: spin 0.7s linear infinite;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .products-table-wrapper {
+            overflow-x: auto;
+            border-radius: 1.25rem;
+            border: 1px solid #eef2f8;
+            background: white;
+            margin-top: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+            min-width: 320px;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 1rem 1.2rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0f2b3f;
+            border-bottom: 2px solid #dee4ec;
+            text-align: right;
+        }
+
+        td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #eef2f8;
+            color: #1e2f3d;
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #0f3b5c;
+        }
+
+        .price-value {
+            font-family: 'Courier New', 'SF Mono', monospace;
+            font-weight: 600;
+            background: #f3f6fc;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        tfoot tr {
+            background: #f9fbfe;
+            border-top: 2px solid #cfdfed;
+        }
+
+        tfoot td {
+            font-weight: 800;
+            font-size: 1.2rem;
+            padding: 1.2rem 1.2rem;
+            background: #fefefe;
+        }
+
+        .total-label {
+            font-size: 1.2rem;
+            color: #1a4c6e;
+            font-weight: 800;
+        }
+
+        .total-amount {
+            color: #1e6f3f;
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-family: monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .error-message {
+            background: #fee9e6;
+            border-right: 5px solid #c2410c;
+            color: #9b2c1d;
+            padding: 1rem 1.4rem;
+            border-radius: 1rem;
+            font-weight: 500;
+        }
+
+        .badge-empty {
+            background: #eef2ff;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 1.2rem;
+            color: #4b6b8f;
+        }
+
+        footer {
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 1rem 2rem;
+            border-top: 1px solid #e9edf2;
+            color: #5f7f9e;
+            background: #fcfdff;
+        }
+
+        @media (max-width: 640px) {
+            .content {
+                padding: 1.2rem;
+            }
+            th, td {
+                padding: 0.8rem 0.9rem;
+            }
+            .total-amount {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+        <div id="loadingState" class="status-card">
+            <span class="spinner"></span> جاري تحميل الميزات...
+        </div>
+        <div id="errorMessage" class="status-card error-message" style="display: none;"></div>
+        
+        <div id="tableWrapper" class="products-table-wrapper" style="display: none;">
+            <table id="productsTable">
+                <thead>
+                    <tr>
+                        <th>الميزة</th>
+                        <th>السعر</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+                <tfoot id="tableFoot">
+                    <tr>
+                        <td class="total-label">الإجمالي الكلي</td>
+                        <td id="totalAmountCell" class="total-amount">$0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+<script>
+    (function() {
+        const DATA_URL = './acf.json';
+        
+        const loadingDiv = document.getElementById('loadingState');
+        const errorDiv = document.getElementById('errorMessage');
+        const tableWrapper = document.getElementById('tableWrapper');
+        const tableBody = document.getElementById('tableBody');
+        const totalAmountSpan = document.getElementById('totalAmountCell');
+        
+        function extractPriceNumber(priceRaw) {
+            if (priceRaw === undefined || priceRaw === null) {
+                return 0;
+            }
+            if (typeof priceRaw === 'number') {
+                return isNaN(priceRaw) ? 0 : priceRaw;
+            }
+            if (typeof priceRaw === 'string') {
+                const trimmed = priceRaw.trim();
+                const match = trimmed.match(/(\d+(?:\.\d+)?)/);
+                if (match && match[1]) {
+                    const num = parseFloat(match[1]);
+                    return isNaN(num) ? 0 : num;
+                }
+                const fallbackNum = parseFloat(trimmed.replace(/[^\d.-]/g, ''));
+                return isNaN(fallbackNum) ? 0 : fallbackNum;
+            }
+            return 0;
+        }
+        
+        function formatCurrency(value) {
+            if (isNaN(value)) return '$0.00';
+            return `$${value.toFixed(2)}`;
+        }
+        
+        function renderProducts(productsArray) {
+            tableBody.innerHTML = '';
+            
+            if (!Array.isArray(productsArray) || productsArray.length === 0) {
+                const emptyRow = document.createElement('tr');
+                const emptyCell = document.createElement('td');
+                emptyCell.colSpan = 2;
+                emptyCell.style.textAlign = 'center';
+                emptyCell.style.padding = '2rem';
+                emptyCell.style.color = '#6c8eae';
+                emptyCell.style.fontWeight = '500';
+                emptyCell.textContent = '⚠️ لا توجد ميزات لعرضها';
+                emptyRow.appendChild(emptyCell);
+                tableBody.appendChild(emptyRow);
+                totalAmountSpan.textContent = formatCurrency(0);
+                return;
+            }
+            
+            let grandTotal = 0;
+            
+            productsArray.forEach((product, index) => {
+                const productName = product.name && product.name.trim() !== '' ? product.name : `ميزة #${index + 1}`;
+                
+                let originalPriceDisplay = 'غير محدد';
+                let priceNumeric = 0;
+                
+                if (product.hasOwnProperty('price')) {
+                    const rawPrice = product.price;
+                    priceNumeric = extractPriceNumber(rawPrice);
+                    
+                    if (typeof rawPrice === 'string' && rawPrice.trim() !== '') {
+                        originalPriceDisplay = rawPrice.trim();
+                    } else if (typeof rawPrice === 'number') {
+                        originalPriceDisplay = formatCurrency(rawPrice);
+                    } else {
+                        originalPriceDisplay = formatCurrency(priceNumeric);
+                    }
+                } else {
+                    originalPriceDisplay = '—';
+                    priceNumeric = 0;
+                }
+                
+                grandTotal += priceNumeric;
+                
+                const row = document.createElement('tr');
+                
+                const nameCell = document.createElement('td');
+                nameCell.className = 'product-name';
+                nameCell.textContent = productName;
+                row.appendChild(nameCell);
+                
+                const priceCell = document.createElement('td');
+                const priceSpan = document.createElement('span');
+                priceSpan.className = 'price-value';
+                priceSpan.textContent = originalPriceDisplay;
+                priceCell.appendChild(priceSpan);
+                row.appendChild(priceCell);
+                
+                tableBody.appendChild(row);
+            });
+            
+            totalAmountSpan.textContent = formatCurrency(grandTotal);
+        }
+        
+        async function fetchProductsData() {
+            try {
+                loadingDiv.style.display = 'flex';
+                loadingDiv.style.justifyContent = 'center';
+                loadingDiv.style.alignItems = 'center';
+                loadingDiv.style.gap = '8px';
+                errorDiv.style.display = 'none';
+                tableWrapper.style.display = 'none';
+                errorDiv.innerHTML = '';
+                
+                const response = await fetch(DATA_URL, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' },
+                    cache: 'no-cache' // لمنع أي مشكلة تخزين مؤقت أثناء التطوير
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`فشل تحميل الملف (HTTP ${response.status}). تأكد من وجود data.json في المسار الصحيح.`);
+                }
+                
+                const rawData = await response.json();
+                
+                let productsList = [];
+                if (Array.isArray(rawData)) {
+                    productsList = rawData;
+                } else if (rawData && typeof rawData === 'object' && Array.isArray(rawData.products)) {
+                    productsList = rawData.products;
+                } else {
+                    if (rawData && typeof rawData === 'object' && rawData.name) {
+                        productsList = [rawData];
+                    } else {
+                        throw new Error('تنسيق البيانات غير صحيح: يجب أن تكون مصفوفة من المنتجات أو كائن يحتوي على حقل products[]');
+                    }
+                }
+                
+                const validProducts = productsList.filter(item => item && typeof item === 'object');
+                
+                renderProducts(validProducts);
+                
+                loadingDiv.style.display = 'none';
+                tableWrapper.style.display = 'block';
+                
+            } catch (error) {
+                console.error('خطأ أثناء تحميل أو معالجة البيانات:', error);
+                loadingDiv.style.display = 'none';
+                errorDiv.style.display = 'block';
+                errorDiv.innerHTML = `
+                    <span style="font-weight:bold;">⚠️ خطأ في تحميل الميزات</span><br>
+                    ${error.message}<br><br>
+                    <span style="font-size:0.85rem;">تأكد من وجود ملف <strong style="background:#f1f3f4; padding:2px 6px; border-radius:8px;">data.json</strong> في نفس مجلد صفحة HTML، وأن الملف يحتوي على مصفوفة من الميزات مثلاً:<br>
+                    [ { "id": 1, "name": "ميزة ١", "price": "5$" }, { "id": 2, "name": "ميزة ٢", "price": "12.50$" } ]</span>
+                `;
+                tableWrapper.style.display = 'none';
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fetchProductsData);
+        } else {
+            fetchProductsData();
+        }
+    })();
+</script>
+</body>
+</html>
